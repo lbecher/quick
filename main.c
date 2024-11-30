@@ -128,6 +128,12 @@ int main(int argc, char *argv[]) {
             printf("Arquivo CSV não existia, mas foi criado.\n");
         } else {
             printf("Arquivo CSV aberto para leitura e escrita.\n");
+
+            if (fseek(csv, 0, SEEK_END) != 0) {
+                perror("Erro ao mover o cursor para o final do arquivo");
+                fclose(csv);
+                return EXIT_FAILURE;
+            }
         }
 
         executar_teste(csv, nome_arquivo, tipo_teste, execucoes);
