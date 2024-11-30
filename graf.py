@@ -35,8 +35,8 @@ for directory in directories:
             tempos_totais = df[[col for col in df.columns if col.startswith('tempo_total') and col != 'tempo_total1']]
 
             # Médias
-            media_tempos = tempos.mean(axis=1)
-            media_tempos_totais = tempos_totais.mean(axis=1)
+            media_tempos = tempos.mean(axis=1) * 1_000
+            media_tempos_totais = tempos_totais.mean(axis=1) * 1_000
 
             # Armazenar os dados para o gráfico
             key = file.split('.')[0]
@@ -52,19 +52,21 @@ for directory, datasets in data.items():
     for idx, (key, values) in enumerate(datasets.items()):
         color = colors[idx % len(colors)]  # Atribuir cor com base no índice
 
-        plt.plot(values["count"], values["media_tempos"], label=f"{key} Média Tempos", color=color)
-        plt.plot(values["count"], values["media_tempos_totais"], linestyle='--', label=f"{key} Média Tempos Totais", color=color)
+        plt.plot(values["count"], values["media_tempos"], label=f"{key} - Ordenação", color=color)
+        plt.plot(values["count"], values["media_tempos_totais"], linestyle='--', label=f"{key} - Ordenação + E/S", color=color)
 
     # Configurações do gráfico
-    plt.title(f"Comparação de Tempos - {directory}")
+    plt.ticklabel_format(style='plain', axis='x')
     plt.xlabel("Tamanho do vetor")
-    plt.ylabel("Tempo de execução em segundos")
-    plt.xticks([100, 2000000])
-    plt.yticks([0, 7.5])
+    plt.ylabel("Tempo de execução (ms)")
+    plt.xticks(np.arange(0, 2_100_000, 100_000))
+    plt.yticks(np.arange(0, 8_400, 400))
+    plt.xticks(rotation=45) 
     plt.legend()
     plt.tight_layout()
 
     # Exibir gráfico
+    plt.grid()
     plt.show()
 
 # Criar gráficos separados por diretório com valores filtrados
@@ -80,17 +82,19 @@ for directory, datasets in data.items():
         filtered_media_tempos_totais = values["media_tempos_totais"][mask]
 
         # Plotar os valores filtrados
-        plt.plot(filtered_count, filtered_media_tempos, label=f"{key} Média Tempos", color=color)
-        plt.plot(filtered_count, filtered_media_tempos_totais, linestyle='--', label=f"{key} Média Tempos Totais", color=color)
+        plt.plot(filtered_count, filtered_media_tempos, label=f"{key} - Ordenação", color=color)
+        plt.plot(filtered_count, filtered_media_tempos_totais, linestyle='--', label=f"{key} - Ordenação + E/S", color=color)
 
     # Configurações do gráfico
-    plt.title(f"Comparação de Tempos - {directory}")
+    plt.ticklabel_format(style='plain', axis='x')
     plt.xlabel("Tamanho do vetor")
-    plt.ylabel("Tempo de execução em segundos")
-    plt.xticks([500, 5000])
-    plt.yticks([0, 0.001])
+    plt.ylabel("Tempo de execução (ms)")
+    plt.xticks(np.arange(0, 5_250, 250))
+    plt.yticks(np.arange(0, 15.75, 0.75))
+    plt.xticks(rotation=45) 
     plt.legend()
     plt.tight_layout()
 
     # Exibir gráfico
+    plt.grid()
     plt.show()
