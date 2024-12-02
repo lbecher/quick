@@ -46,6 +46,8 @@ for directory in directories:
                 "media_tempos_totais": media_tempos_totais
             }
 
+
+
 # Criar gráficos separados por diretório
 for directory, datasets in data.items():
     plt.figure(figsize=(8, 8))
