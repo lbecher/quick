@@ -1,4 +1,4 @@
-# MergeSort_SuperMerge_Comparation
+# Comparison Between Quicksort Pivots
 >Colaboradores: [Gustavo Macedo](https://github.com/MacedoCZY), [Heloisa Alves](https://github.com/Helogizzy) e [Luiz Becher](https://github.com/lbecher) 
 
 ## Sobre
